@@ -1,0 +1,23 @@
+{
+    "name": "joann/event-bus",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Lukasz93P",
+            "email": "lukasz9.3@interia.pl"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Lukasz93P\\eventBus\\": "src/"
+        }
+    },
+    "require": {
+        "php": "^7.3",
+        "doctrine/collections": "^1.6",
+        "lukasz93p/doctrine-domain-id-types": "^1.0",
+        "lukasz93p/object-serializer": "dev-master",
+        "nesbot/carbon": "^2.26",
+        "lukasz93p/async-message-channel": "dev-master"
+    }
+}
