@@ -1,15 +1,16 @@
 <?php
 
 
-namespace Lukasz93P\eventBus\serializableMessageConverter;
+namespace Lukasz93P\tasksQueue\serializableMessageConverter;
 
 
 use Lukasz93P\AsyncMessageChannel\BasicMessage;
-use Lukasz93P\AsyncMessageChannel\Message;
-use Lukasz93P\eventBus\serializableMessageConverter\exceptions\ConversionFailed;
+use Lukasz93P\AsyncMessageChannel\ProcessableMessage;
+use Lukasz93P\AsyncMessageChannel\PublishableMessage;
 use Lukasz93P\objectSerializer\exceptions\DeserializationFailed;
 use Lukasz93P\objectSerializer\ObjectSerializer;
 use Lukasz93P\objectSerializer\SerializableObject;
+use Lukasz93P\tasksQueue\serializableMessageConverter\exceptions\ConversionFailed;
 
 class SerializableMessageConverterBasedOnObjectSerializer implements SerializableMessageConverter
 {
@@ -28,10 +29,10 @@ class SerializableMessageConverterBasedOnObjectSerializer implements Serializabl
         $this->objectSerializer = $objectSerializer;
     }
 
-    public function toMessage(SerializableObject $serializableObject): Message
+    public function toMessage(SerializableObject $serializableObject): PublishableMessage
     {
         try {
-            return BasicMessage::fromIdAndBody($serializableObject->id(), $this->objectSerializer->serialize($serializableObject));
+            return BasicMessage::publishable($serializableObject->queueKey(), $this->objectSerializer->serialize($serializableObject));
         } catch (DeserializationFailed $deserializationFailed) {
             throw ConversionFailed::fromReason($deserializationFailed);
         }
@@ -47,7 +48,7 @@ class SerializableMessageConverterBasedOnObjectSerializer implements Serializabl
         );
     }
 
-    public function toObject(Message $message): SerializableObject
+    public function toObject(ProcessableMessage $message): SerializableObject
     {
         try {
             return $this->objectSerializer->deserialize($message->body());
@@ -59,7 +60,7 @@ class SerializableMessageConverterBasedOnObjectSerializer implements Serializabl
     public function toObjects(array $messages): array
     {
         return array_map(
-            function (Message $message) {
+            function (ProcessableMessage $message) {
                 return $this->toObject($message);
             },
             $messages

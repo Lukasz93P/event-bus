@@ -4,70 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "16a157633a5d511e2b2b44ebbff52d2b",
+    "content-hash": "dae3ab515ac5e3ef91e082a6346df745",
     "packages": [
-        {
-            "name": "beberlei/assert",
-            "version": "v3.2.6",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/beberlei/assert.git",
-                "reference": "99508be011753690fe108ded450f5caaae180cfa"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/beberlei/assert/zipball/99508be011753690fe108ded450f5caaae180cfa",
-                "reference": "99508be011753690fe108ded450f5caaae180cfa",
-                "shasum": ""
-            },
-            "require": {
-                "ext-ctype": "*",
-                "ext-json": "*",
-                "ext-mbstring": "*",
-                "ext-simplexml": "*",
-                "php": "^7"
-            },
-            "require-dev": {
-                "friendsofphp/php-cs-fixer": "*",
-                "phpstan/phpstan-shim": "*",
-                "phpunit/phpunit": ">=6.0.0 <8"
-            },
-            "suggest": {
-                "ext-intl": "Needed to allow Assertion::count(), Assertion::isCountable(), Assertion::minCount(), and Assertion::maxCount() to operate on ResourceBundles"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "Assert\\": "lib/Assert"
-                },
-                "files": [
-                    "lib/Assert/functions.php"
-                ]
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "BSD-2-Clause"
-            ],
-            "authors": [
-                {
-                    "name": "Benjamin Eberlei",
-                    "email": "kontakt@beberlei.de",
-                    "role": "Lead Developer"
-                },
-                {
-                    "name": "Richard Quadling",
-                    "email": "rquadling@gmail.com",
-                    "role": "Collaborator"
-                }
-            ],
-            "description": "Thin assertion library for input validation in business models.",
-            "keywords": [
-                "assert",
-                "assertion",
-                "validation"
-            ],
-            "time": "2019-10-10T10:33:57+00:00"
-        },
         {
             "name": "doctrine/annotations",
             "version": "v1.8.0",
@@ -1893,16 +1831,15 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Lukasz93P/async-message-channel.git",
-                "reference": "0ad38b6acb302b03dd35d46979ece759d0547a7c"
+                "reference": "2fef9c907d5b62cca496c53107475028adf4f5f3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Lukasz93P/async-message-channel/zipball/0ad38b6acb302b03dd35d46979ece759d0547a7c",
-                "reference": "0ad38b6acb302b03dd35d46979ece759d0547a7c",
+                "url": "https://api.github.com/repos/Lukasz93P/async-message-channel/zipball/2fef9c907d5b62cca496c53107475028adf4f5f3",
+                "reference": "2fef9c907d5b62cca496c53107475028adf4f5f3",
                 "shasum": ""
             },
             "require": {
-                "beberlei/assert": "^3.2",
                 "php-amqplib/php-amqplib": "^2.10",
                 "psr/log": "^1.1"
             },
@@ -1923,7 +1860,7 @@
                 }
             ],
             "description": "Package which allow to add and then process asynchronous messages. Currently based on RabbitMQ.",
-            "time": "2019-11-11T15:14:09+00:00"
+            "time": "2019-11-12T18:44:23+00:00"
         },
         {
             "name": "lukasz93p/doctrine-domain-id-types",

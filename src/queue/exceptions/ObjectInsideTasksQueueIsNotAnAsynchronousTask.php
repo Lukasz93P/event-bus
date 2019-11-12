@@ -1,14 +1,14 @@
 <?php
 
 
-namespace Lukasz93P\eventBus\exceptions;
+namespace Lukasz93P\tasksQueue\queue\exceptions;
 
 
-use Lukasz93P\eventBus\DomainEvent;
+use Lukasz93P\tasksQueue\AsynchronousTask;
 use RuntimeException;
 use Throwable;
 
-class ObjectInsideEventsQueueIsNotAnEvent extends RuntimeException
+class ObjectInsideTasksQueueIsNotAnAsynchronousTask extends RuntimeException
 {
     /**
      * @var object
@@ -17,7 +17,7 @@ class ObjectInsideEventsQueueIsNotAnEvent extends RuntimeException
 
     public static function fromObject($object): self
     {
-        return new self($object, "Serialized object from event queue is not instance of " . DomainEvent::class);
+        return new self($object, "Serialized object from tasks queue is not instance of " . AsynchronousTask::class);
     }
 
     /**

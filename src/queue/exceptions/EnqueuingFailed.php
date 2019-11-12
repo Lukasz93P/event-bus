@@ -1,17 +1,17 @@
 <?php
 
 
-namespace Lukasz93P\eventBus\exceptions;
+namespace Lukasz93P\tasksQueue\queue\exceptions;
 
 
 use RuntimeException;
 use Throwable;
 
-class EventsPublicationFailed extends RuntimeException
+class EnqueuingFailed extends RuntimeException
 {
     public static function fromReason(Throwable $reason): self
     {
-        return new self("Events publication failed.", $reason->getCode(), $reason);
+        return new self("Tasks enqueuing failed.", $reason->getCode(), $reason);
     }
 
     protected function __construct($message = "", $code = 0, Throwable $previous = null)

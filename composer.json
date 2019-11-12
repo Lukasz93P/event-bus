@@ -1,5 +1,5 @@
 {
-    "name": "lukasz93p/event-bus",
+    "name": "lukasz93p/tasksQueue",
     "license": "MIT",
     "authors": [
         {
@@ -9,7 +9,7 @@
     ],
     "autoload": {
         "psr-4": {
-            "Lukasz93P\\eventBus\\": "src/"
+            "Lukasz93P\\tasksQueue\\": "src/"
         }
     },
     "require": {
