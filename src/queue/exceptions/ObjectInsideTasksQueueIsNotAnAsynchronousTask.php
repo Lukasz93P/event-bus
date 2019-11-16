@@ -1,17 +1,18 @@
 <?php
+declare(strict_types=1);
 
 
 namespace Lukasz93P\tasksQueue\queue\exceptions;
 
 
 use Lukasz93P\tasksQueue\AsynchronousTask;
-use RuntimeException;
 use Throwable;
 
-class ObjectInsideTasksQueueIsNotAnAsynchronousTask extends RuntimeException
+class ObjectInsideTasksQueueIsNotAnAsynchronousTask extends AsynchronousQueueException
 {
     /**
      * @var object
+     *
      */
     private $object;
 

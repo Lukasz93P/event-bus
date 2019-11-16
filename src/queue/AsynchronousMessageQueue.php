@@ -1,10 +1,10 @@
 <?php
+declare(strict_types=1);
 
 
 namespace Lukasz93P\tasksQueue\queue;
 
 
-use Doctrine\Common\Collections\Collection;
 use Lukasz93P\AsyncMessageChannel\AsynchronousMessageChannel;
 use Lukasz93P\AsyncMessageChannel\exceptions\MessageConstantlyUnprocessable;
 use Lukasz93P\AsyncMessageChannel\exceptions\MessagePublishingFailed;
@@ -28,27 +28,17 @@ class AsynchronousMessageQueue extends BaseQueue implements AsynchronousQueue, M
      */
     private $serializableMessageConverter;
 
-    public static function fromAsynchronousMessageChannelAndSerializableMessageConverter(
-        AsynchronousMessageChannel $asynchronousMessageChannel,
-        SerializableMessageConverter $serializableMessageConverter
-    ): AsynchronousQueue {
-        return new self($asynchronousMessageChannel, $serializableMessageConverter);
-    }
-
-    private function __construct(AsynchronousMessageChannel $asynchronousMessageChannel, SerializableMessageConverter $serializableMessageConverter)
+    public function __construct(AsynchronousMessageChannel $asynchronousMessageChannel, SerializableMessageConverter $serializableMessageConverter)
     {
         $this->asynchronousMessageChannel = $asynchronousMessageChannel;
         $this->serializableMessageConverter = $serializableMessageConverter;
     }
 
-    /**
-     * @param Collection|AsynchronousTask[] $tasks
-     */
-    public function enqueue(Collection $tasks): void
+    public function enqueue(array $tasks): void
     {
         try {
-            $this->asynchronousMessageChannel->add($this->serializableMessageConverter->toMessages($tasks->toArray()));
-        } catch (MessagePublishingFailed | ConversionFailed $exception) {
+            $this->asynchronousMessageChannel->add($this->serializableMessageConverter->toMessages($tasks));
+        } catch (MessagePublishingFailed $exception) {
             throw EnqueuingFailed::fromReason($exception);
         }
     }
@@ -62,7 +52,7 @@ class AsynchronousMessageQueue extends BaseQueue implements AsynchronousQueue, M
     {
         try {
             $task = $this->serializableMessageConverter->toObject($message);
-            $this->checkIfEnqueuedObjectIsAsynchronousTaskEvent($task);
+            $this->checkIfEnqueuedObjectIsAsynchronousTask($task);
         } catch (ObjectInsideTasksQueueIsNotAnAsynchronousTask | ConversionFailed $exception) {
             throw MessageConstantlyUnprocessable::fromReason($exception);
         }
@@ -70,20 +60,11 @@ class AsynchronousMessageQueue extends BaseQueue implements AsynchronousQueue, M
         $this->handleTask($task);
     }
 
-    private function checkIfEnqueuedObjectIsAsynchronousTaskEvent($enqueuedObject): void
+    private function checkIfEnqueuedObjectIsAsynchronousTask($enqueuedObject): void
     {
         if (!$enqueuedObject instanceof AsynchronousTask) {
             throw ObjectInsideTasksQueueIsNotAnAsynchronousTask::fromObject($enqueuedObject);
         }
-    }
-
-    private function handleTask(AsynchronousTask $task): void
-    {
-        $handler = $this->findHandlerFor($task);
-        if (!$handler) {
-            return;
-        }
-        $handler->handle($task);
     }
 
 }

@@ -1,10 +1,13 @@
 <?php
+declare(strict_types=1);
 
 
 namespace Lukasz93P\tasksQueue\queue;
 
 
+use Lukasz93P\AsyncMessageChannel\exceptions\MessageConstantlyUnprocessable;
 use Lukasz93P\tasksQueue\AsynchronousTask;
+use Lukasz93P\tasksQueue\queue\exceptions\TaskConstantlyUnprocessable;
 use Lukasz93P\tasksQueue\TaskHandler;
 
 abstract class BaseQueue implements Queue
@@ -21,7 +24,20 @@ abstract class BaseQueue implements Queue
         return $this;
     }
 
-    protected function findHandlerFor(AsynchronousTask $task): ?TaskHandler
+    protected function handleTask(AsynchronousTask $task): void
+    {
+        $handler = $this->findHandlerFor($task);
+        if (!$handler) {
+            return;
+        }
+        try {
+            $handler->handle($task);
+        } catch (TaskConstantlyUnprocessable $taskConstantlyUnprocessable) {
+            throw MessageConstantlyUnprocessable::fromReason($taskConstantlyUnprocessable);
+        }
+    }
+
+    private function findHandlerFor(AsynchronousTask $task): ?TaskHandler
     {
         return $this->registeredHandlers[get_class($task)] ?? null;
     }

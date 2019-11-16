@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 
 namespace Lukasz93P\tasksQueue\serializableMessageConverter;
@@ -7,23 +8,18 @@ namespace Lukasz93P\tasksQueue\serializableMessageConverter;
 use Lukasz93P\AsyncMessageChannel\ProcessableMessage;
 use Lukasz93P\AsyncMessageChannel\PublishableMessage;
 use Lukasz93P\objectSerializer\SerializableObject;
+use Lukasz93P\tasksQueue\AsynchronousTask;
 use Lukasz93P\tasksQueue\serializableMessageConverter\exceptions\ConversionFailed;
 
 interface SerializableMessageConverter
 {
-    /**
-     * @param SerializableObject $serializableObject
-     * @return PublishableMessage
-     * @throws ConversionFailed
-     */
-    public function toMessage(SerializableObject $serializableObject): PublishableMessage;
+    public function toMessage(AsynchronousTask $asynchronousTask): PublishableMessage;
 
     /**
-     * @param SerializableObject[] $serializableObjects
+     * @param AsynchronousTask[] $asynchronousTasks
      * @return PublishableMessage[]
-     * @throws ConversionFailed
      */
-    public function toMessages(array $serializableObjects): array;
+    public function toMessages(array $asynchronousTasks): array;
 
     /**
      * @param ProcessableMessage $message
@@ -31,12 +27,4 @@ interface SerializableMessageConverter
      * @throws ConversionFailed
      */
     public function toObject(ProcessableMessage $message): SerializableObject;
-
-
-    /**
-     * @param ProcessableMessage[] $messages
-     * @return array
-     * @throws ConversionFailed
-     */
-    public function toObjects(array $messages): array;
 }

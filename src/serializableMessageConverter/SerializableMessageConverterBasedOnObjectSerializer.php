@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 
 namespace Lukasz93P\tasksQueue\serializableMessageConverter;
@@ -10,6 +11,7 @@ use Lukasz93P\AsyncMessageChannel\PublishableMessage;
 use Lukasz93P\objectSerializer\exceptions\DeserializationFailed;
 use Lukasz93P\objectSerializer\ObjectSerializer;
 use Lukasz93P\objectSerializer\SerializableObject;
+use Lukasz93P\tasksQueue\AsynchronousTask;
 use Lukasz93P\tasksQueue\serializableMessageConverter\exceptions\ConversionFailed;
 
 class SerializableMessageConverterBasedOnObjectSerializer implements SerializableMessageConverter
@@ -19,9 +21,9 @@ class SerializableMessageConverterBasedOnObjectSerializer implements Serializabl
      */
     private $objectSerializer;
 
-    public static function withObjectSerializer(ObjectSerializer $serializer): SerializableMessageConverter
+    public static function withObjectSerializer(ObjectSerializer $objectSerializer): SerializableMessageConverter
     {
-        return new self($serializer);
+        return new self($objectSerializer);
     }
 
     private function __construct(ObjectSerializer $objectSerializer)
@@ -29,22 +31,22 @@ class SerializableMessageConverterBasedOnObjectSerializer implements Serializabl
         $this->objectSerializer = $objectSerializer;
     }
 
-    public function toMessage(SerializableObject $serializableObject): PublishableMessage
+    public function toMessage(AsynchronousTask $asynchronousTask): PublishableMessage
     {
-        try {
-            return BasicMessage::publishable($serializableObject->queueKey(), $this->objectSerializer->serialize($serializableObject));
-        } catch (DeserializationFailed $deserializationFailed) {
-            throw ConversionFailed::fromReason($deserializationFailed);
-        }
+        return BasicMessage::publishable(
+            $asynchronousTask->routingKey(),
+            $asynchronousTask->exchange(),
+            $this->objectSerializer->serialize($asynchronousTask)
+        );
     }
 
-    public function toMessages(array $serializableObjects): array
+    public function toMessages(array $asynchronousTasks): array
     {
         return array_map(
-            function (SerializableObject $serializableObject) {
-                return $this->toMessage($serializableObject);
+            function (AsynchronousTask $asynchronousTask) {
+                return $this->toMessage($asynchronousTask);
             },
-            $serializableObjects
+            $asynchronousTasks
         );
     }
 
@@ -55,16 +57,6 @@ class SerializableMessageConverterBasedOnObjectSerializer implements Serializabl
         } catch (DeserializationFailed $deserializationFailed) {
             throw ConversionFailed::fromReason($deserializationFailed);
         }
-    }
-
-    public function toObjects(array $messages): array
-    {
-        return array_map(
-            function (ProcessableMessage $message) {
-                return $this->toObject($message);
-            },
-            $messages
-        );
     }
 
 }

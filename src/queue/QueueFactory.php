@@ -1,12 +1,14 @@
 <?php
+declare(strict_types=1);
 
 
 namespace Lukasz93P\tasksQueue\queue;
 
 
-use Lukasz93P\AsyncMessageChannel\AsynchronousMessageChannel;
-use Lukasz93P\objectSerializer\ObjectSerializer;
+use Lukasz93P\AsyncMessageChannel\AsynchronousMessageChannelFactory;
+use Lukasz93P\objectSerializer\ObjectSerializerFactory;
 use Lukasz93P\tasksQueue\serializableMessageConverter\SerializableMessageConverterBasedOnObjectSerializer;
+use Psr\Log\LoggerInterface;
 
 final class QueueFactory
 {
@@ -16,12 +18,14 @@ final class QueueFactory
     }
 
     public static function asynchronous(
-        AsynchronousMessageChannel $asynchronousMessageChannel,
-        ObjectSerializer $serializer
+        LoggerInterface $logger,
+        array $tasksIdentificationKeysToClassNamesMapping
     ): AsynchronousQueue {
-        return AsynchronousMessageQueue::fromAsynchronousMessageChannelAndSerializableMessageConverter(
-            $asynchronousMessageChannel,
-            SerializableMessageConverterBasedOnObjectSerializer::withObjectSerializer($serializer)
+        return new AsynchronousMessageQueue(
+            AsynchronousMessageChannelFactory::withLogger($logger),
+            SerializableMessageConverterBasedOnObjectSerializer::withObjectSerializer(
+                ObjectSerializerFactory::create($tasksIdentificationKeysToClassNamesMapping)
+            )
         );
     }
 

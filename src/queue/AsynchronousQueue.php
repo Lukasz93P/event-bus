@@ -1,16 +1,17 @@
 <?php
+declare(strict_types=1);
 
 
 namespace Lukasz93P\tasksQueue\queue;
 
 
-use ErrorException;
+use Throwable;
 
 interface AsynchronousQueue extends Queue
 {
     /**
      * @param string $queueKey
-     * @throws ErrorException
+     * @throws Throwable
      */
     public function startTasksProcessingLoop(string $queueKey): void;
 }

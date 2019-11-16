@@ -1,6 +1,8 @@
 {
-    "name": "lukasz93p/tasksQueue",
+    "name": "lukasz93p/asynchronous-tasks-queue",
+    "description": "Package which allow asynchronous tasks processing in convenient manner.",
     "license": "MIT",
+    "type": "library",
     "authors": [
         {
             "name": "Lukasz93P",
@@ -14,10 +16,7 @@
     },
     "require": {
         "php": "^7.3",
-        "doctrine/collections": "^1.6",
-        "lukasz93p/doctrine-domain-id-types": "^1.0",
-        "lukasz93p/object-serializer": "dev-master",
-        "nesbot/carbon": "^2.26",
-        "lukasz93p/async-message-channel": "dev-master"
+        "lukasz93p/async-message-channel": "^1.0",
+        "lukasz93p/object-serializer": "^1.0"
     }
 }
