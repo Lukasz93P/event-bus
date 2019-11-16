@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Lukasz93P\tasksQueue\queue;
 
 
-class JustForwardingQueue extends BaseQueue implements Queue
+class SynchronousQueue extends BaseQueue implements Queue
 {
     public function enqueue(array $tasks): void
     {

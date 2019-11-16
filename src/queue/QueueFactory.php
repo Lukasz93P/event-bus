@@ -14,7 +14,7 @@ final class QueueFactory
 {
     public static function synchronous(): Queue
     {
-        return new JustForwardingQueue();
+        return new SynchronousQueue();
     }
 
     public static function asynchronous(
