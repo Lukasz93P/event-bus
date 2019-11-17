@@ -11,7 +11,7 @@ class EnqueuingFailed extends AsynchronousQueueException
 {
     public static function fromReason(Throwable $reason): self
     {
-        return new self("Tasks enqueuing failed.", $reason->getCode(), $reason);
+        return new self("Tasks enqueuing failed. Reason:" . PHP_EOL . $reason->getMessage(), $reason->getCode(), $reason);
     }
 
 }
