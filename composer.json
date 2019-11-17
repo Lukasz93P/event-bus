@@ -1,0 +1,23 @@
+{
+    "name": "lukasz93p/event-bus",
+    "description": "",
+    "license": "MIT",
+    "type": "library",
+    "authors": [
+        {
+            "name": "Lukasz93P",
+            "email": "lukasz9.3@interia.pl"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Lukasz93P\\EventBus\\": "src/"
+        }
+    },
+    "require": {
+        "nesbot/carbon": "^2.26",
+        "beberlei/assert": "^3.2",
+        "lukasz93p/asynchronous-tasks-queue": "^1.0",
+        "lukasz93p/doctrine-domain-id-types": "^1.0"
+    }
+}
