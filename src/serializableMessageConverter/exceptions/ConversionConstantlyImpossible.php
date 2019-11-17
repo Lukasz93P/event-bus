@@ -10,12 +10,12 @@ use Lukasz93P\objectSerializer\SerializableObject;
 use RuntimeException;
 use Throwable;
 
-class ConversionFailed extends RuntimeException
+class ConversionConstantlyImpossible extends RuntimeException
 {
     public static function fromReason(Throwable $reason): self
     {
         return new self(
-            'Conversion between ' . SerializableObject::class . ' and ' . ProcessableMessage::class . ' failed.' . PHP_EOL . "Reason: {$reason->getMessage()}",
+            'Conversion between ' . SerializableObject::class . ' and ' . ProcessableMessage::class . ' will not be possible.' . PHP_EOL . "Reason: {$reason->getMessage()}",
             $reason->getCode(),
             $reason
         );

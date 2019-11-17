@@ -9,6 +9,7 @@ use Lukasz93P\AsyncMessageChannel\ProcessableMessage;
 use Lukasz93P\AsyncMessageChannel\PublishableMessage;
 use Lukasz93P\objectSerializer\SerializableObject;
 use Lukasz93P\tasksQueue\PublishableAsynchronousTask;
+use Lukasz93P\tasksQueue\serializableMessageConverter\exceptions\ConversionConstantlyImpossible;
 use Lukasz93P\tasksQueue\serializableMessageConverter\exceptions\ConversionFailed;
 
 interface SerializableMessageConverter
@@ -25,6 +26,7 @@ interface SerializableMessageConverter
      * @param ProcessableMessage $message
      * @return SerializableObject
      * @throws ConversionFailed
+     * @throws ConversionConstantlyImpossible
      */
     public function toObject(ProcessableMessage $message): SerializableObject;
 }

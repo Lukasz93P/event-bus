@@ -8,10 +8,12 @@ namespace Lukasz93P\tasksQueue\serializableMessageConverter;
 use Lukasz93P\AsyncMessageChannel\BasicMessage;
 use Lukasz93P\AsyncMessageChannel\ProcessableMessage;
 use Lukasz93P\AsyncMessageChannel\PublishableMessage;
-use Lukasz93P\objectSerializer\exceptions\DeserializationFailed;
+use Lukasz93P\objectSerializer\exceptions\SerializedObjectCorrupted;
+use Lukasz93P\objectSerializer\exceptions\SerializedObjectIdentificationKeyNotMappedToClass;
 use Lukasz93P\objectSerializer\ObjectSerializer;
 use Lukasz93P\objectSerializer\SerializableObject;
 use Lukasz93P\tasksQueue\PublishableAsynchronousTask;
+use Lukasz93P\tasksQueue\serializableMessageConverter\exceptions\ConversionConstantlyImpossible;
 use Lukasz93P\tasksQueue\serializableMessageConverter\exceptions\ConversionFailed;
 
 class SerializableMessageConverterBasedOnObjectSerializer implements SerializableMessageConverter
@@ -54,8 +56,10 @@ class SerializableMessageConverterBasedOnObjectSerializer implements Serializabl
     {
         try {
             return $this->objectSerializer->deserialize($message->body());
-        } catch (DeserializationFailed $deserializationFailed) {
-            throw ConversionFailed::fromReason($deserializationFailed);
+        } catch (SerializedObjectIdentificationKeyNotMappedToClass $exception) {
+            throw ConversionFailed::fromReason($exception);
+        } catch (SerializedObjectCorrupted $exception) {
+            throw ConversionConstantlyImpossible::fromReason($exception);
         }
     }
 
