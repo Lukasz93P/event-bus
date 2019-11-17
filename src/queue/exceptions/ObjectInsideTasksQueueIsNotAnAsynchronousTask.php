@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Lukasz93P\tasksQueue\queue\exceptions;
 
 
-use Lukasz93P\tasksQueue\AsynchronousTask;
+use Lukasz93P\tasksQueue\PublishableAsynchronousTask;
 use Throwable;
 
 class ObjectInsideTasksQueueIsNotAnAsynchronousTask extends AsynchronousQueueException
@@ -18,7 +18,7 @@ class ObjectInsideTasksQueueIsNotAnAsynchronousTask extends AsynchronousQueueExc
 
     public static function fromObject($object): self
     {
-        return new self($object, "Serialized object from tasks queue is not instance of " . AsynchronousTask::class);
+        return new self($object, "Serialized object from tasks queue is not instance of " . PublishableAsynchronousTask::class);
     }
 
     /**

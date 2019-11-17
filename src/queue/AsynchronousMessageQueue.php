@@ -10,7 +10,7 @@ use Lukasz93P\AsyncMessageChannel\exceptions\MessageConstantlyUnprocessable;
 use Lukasz93P\AsyncMessageChannel\exceptions\MessagePublishingFailed;
 use Lukasz93P\AsyncMessageChannel\MessageHandler;
 use Lukasz93P\AsyncMessageChannel\ProcessableMessage;
-use Lukasz93P\tasksQueue\AsynchronousTask;
+use Lukasz93P\tasksQueue\ProcessableAsynchronousTask;
 use Lukasz93P\tasksQueue\queue\exceptions\EnqueuingFailed;
 use Lukasz93P\tasksQueue\queue\exceptions\ObjectInsideTasksQueueIsNotAnAsynchronousTask;
 use Lukasz93P\tasksQueue\serializableMessageConverter\exceptions\ConversionFailed;
@@ -52,17 +52,17 @@ class AsynchronousMessageQueue extends BaseQueue implements AsynchronousQueue, M
     {
         try {
             $task = $this->serializableMessageConverter->toObject($message);
-            $this->checkIfEnqueuedObjectIsAsynchronousTask($task);
+            $this->checkIfEnqueuedObjectIsProcessableAsynchronousTask($task);
         } catch (ObjectInsideTasksQueueIsNotAnAsynchronousTask | ConversionFailed $exception) {
             throw MessageConstantlyUnprocessable::fromReason($exception);
         }
-        /** @var AsynchronousTask $task */
+        /** @var ProcessableAsynchronousTask $task */
         $this->handleTask($task);
     }
 
-    private function checkIfEnqueuedObjectIsAsynchronousTask($enqueuedObject): void
+    private function checkIfEnqueuedObjectIsProcessableAsynchronousTask($enqueuedObject): void
     {
-        if (!$enqueuedObject instanceof AsynchronousTask) {
+        if (!$enqueuedObject instanceof ProcessableAsynchronousTask) {
             throw ObjectInsideTasksQueueIsNotAnAsynchronousTask::fromObject($enqueuedObject);
         }
     }

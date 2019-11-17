@@ -10,8 +10,8 @@ use Lukasz93P\tasksQueue\queue\exceptions\TaskConstantlyUnprocessable;
 interface TaskHandler
 {
     /**
-     * @param AsynchronousTask $task
+     * @param ProcessableAsynchronousTask $task
      * @throws TaskConstantlyUnprocessable
      */
-    public function handle(AsynchronousTask $task): void;
+    public function handle(ProcessableAsynchronousTask $task): void;
 }

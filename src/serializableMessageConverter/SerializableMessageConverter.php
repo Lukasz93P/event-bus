@@ -8,15 +8,15 @@ namespace Lukasz93P\tasksQueue\serializableMessageConverter;
 use Lukasz93P\AsyncMessageChannel\ProcessableMessage;
 use Lukasz93P\AsyncMessageChannel\PublishableMessage;
 use Lukasz93P\objectSerializer\SerializableObject;
-use Lukasz93P\tasksQueue\AsynchronousTask;
+use Lukasz93P\tasksQueue\PublishableAsynchronousTask;
 use Lukasz93P\tasksQueue\serializableMessageConverter\exceptions\ConversionFailed;
 
 interface SerializableMessageConverter
 {
-    public function toMessage(AsynchronousTask $asynchronousTask): PublishableMessage;
+    public function toMessage(PublishableAsynchronousTask $asynchronousTask): PublishableMessage;
 
     /**
-     * @param AsynchronousTask[] $asynchronousTasks
+     * @param PublishableAsynchronousTask[] $asynchronousTasks
      * @return PublishableMessage[]
      */
     public function toMessages(array $asynchronousTasks): array;

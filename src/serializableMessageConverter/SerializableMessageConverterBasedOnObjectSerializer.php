@@ -11,7 +11,7 @@ use Lukasz93P\AsyncMessageChannel\PublishableMessage;
 use Lukasz93P\objectSerializer\exceptions\DeserializationFailed;
 use Lukasz93P\objectSerializer\ObjectSerializer;
 use Lukasz93P\objectSerializer\SerializableObject;
-use Lukasz93P\tasksQueue\AsynchronousTask;
+use Lukasz93P\tasksQueue\PublishableAsynchronousTask;
 use Lukasz93P\tasksQueue\serializableMessageConverter\exceptions\ConversionFailed;
 
 class SerializableMessageConverterBasedOnObjectSerializer implements SerializableMessageConverter
@@ -31,7 +31,7 @@ class SerializableMessageConverterBasedOnObjectSerializer implements Serializabl
         $this->objectSerializer = $objectSerializer;
     }
 
-    public function toMessage(AsynchronousTask $asynchronousTask): PublishableMessage
+    public function toMessage(PublishableAsynchronousTask $asynchronousTask): PublishableMessage
     {
         return BasicMessage::publishable(
             $asynchronousTask->routingKey(),
@@ -43,7 +43,7 @@ class SerializableMessageConverterBasedOnObjectSerializer implements Serializabl
     public function toMessages(array $asynchronousTasks): array
     {
         return array_map(
-            function (AsynchronousTask $asynchronousTask) {
+            function (PublishableAsynchronousTask $asynchronousTask) {
                 return $this->toMessage($asynchronousTask);
             },
             $asynchronousTasks

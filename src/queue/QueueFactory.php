@@ -12,6 +12,10 @@ use Psr\Log\LoggerInterface;
 
 final class QueueFactory
 {
+    /**
+     * <b>ONLY FOR TESTING PURPOSES</b>
+     * @return Queue
+     */
     public static function synchronous(): Queue
     {
         return new SynchronousQueue();
