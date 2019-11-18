@@ -31,7 +31,7 @@ abstract class BaseEventRecorder implements EventRecorder
         $this->recordedEvents->clear();
     }
 
-    protected function raise(PublishableEvent $event): void
+    protected function record(PublishableEvent $event): void
     {
         if ($this->recordedEvents->contains($event)) {
             return;
