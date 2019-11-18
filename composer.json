@@ -18,6 +18,7 @@
         "nesbot/carbon": "^2.26",
         "beberlei/assert": "^3.2",
         "lukasz93p/asynchronous-tasks-queue": "^1.0",
-        "lukasz93p/doctrine-domain-id-types": "^1.0"
+        "lukasz93p/doctrine-domain-id-types": "^1.0",
+        "doctrine/collections": "^1.6"
     }
 }
