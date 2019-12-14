@@ -22,7 +22,8 @@ interface EventBus
 
     /**
      * @param string $eventsQueueName
+     * @param int $timeoutInSeconds
      * @throws Throwable
      */
-    public function startProcessingEvents(string $eventsQueueName): void;
+    public function startProcessingEvents(string $eventsQueueName, int $timeoutInSeconds = 0): void;
 }

@@ -39,9 +39,9 @@ class EventBusBuiltOnAsynchronousTasksQueue implements EventBus
         }
     }
 
-    public function startProcessingEvents(string $eventsQueueName): void
+    public function startProcessingEvents(string $eventsQueueName, int $timeoutInSeconds = 0): void
     {
-        $this->decoratedAsynchronousTasksQueue->startTasksProcessingLoop($eventsQueueName);
+        $this->decoratedAsynchronousTasksQueue->startTasksProcessingLoop($eventsQueueName, $timeoutInSeconds);
     }
 
 }
