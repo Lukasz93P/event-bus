@@ -9,7 +9,7 @@ class EventsPublicationFailed extends EventBusException
 {
     protected static function generateBaseMessage(): string
     {
-        return "Events publication failed.";
+        return 'Events publication failed.';
     }
 
 }

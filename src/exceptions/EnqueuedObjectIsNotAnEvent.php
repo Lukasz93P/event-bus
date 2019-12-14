@@ -22,7 +22,7 @@ class EnqueuedObjectIsNotAnEvent extends RuntimeException
 
     private function __construct($object)
     {
-        parent::__construct("Enqueued object is not an " . ProcessableEvent::class);
+        parent::__construct('Enqueued object is not an ' . ProcessableEvent::class);
         $this->object = $object;
     }
 

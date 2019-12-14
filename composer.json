@@ -15,9 +15,10 @@
     "require": {
         "php": "^7.3",
         "doctrine/collections": "^1.6",
-        "nesbot/carbon": "^2.26",
         "beberlei/assert": "^3.2",
         "lukasz93p/asynchronous-tasks-queue": "1.1",
-        "lukasz93p/doctrine-domain-id-types": "^1.0"
+        "lukasz93p/doctrine-domain-id-types": "^1.0",
+        "nesbot/carbon": "^2.27",
+        "lukasz93p/object-serializer": "^1.0"
     }
 }
