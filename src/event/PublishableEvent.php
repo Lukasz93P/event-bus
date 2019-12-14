@@ -9,21 +9,25 @@ use Assert\Assertion;
 use Assert\AssertionFailedException;
 use InvalidArgumentException;
 use Lukasz93P\tasksQueue\PublishableAsynchronousTask;
+use JMS\Serializer\Annotation as Serializer;
 
 abstract class PublishableEvent extends Event implements PublishableAsynchronousTask
 {
     /**
      * @var string
+     * @Serializer\Exclude()
      */
     private $routingKey;
 
     /**
      * @var string
+     * @Serializer\Exclude()
      */
     private $exchange;
 
     /**
      * @var string
+     * @Serializer\Exclude()
      */
     private $classIdentificationKey;
 
