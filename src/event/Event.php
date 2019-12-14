@@ -9,6 +9,7 @@ use Assert\Assertion;
 use Assert\AssertionFailedException;
 use Carbon\Carbon;
 use InvalidArgumentException;
+use JMS\Serializer\Annotation as Serializer;
 
 abstract class Event
 {
