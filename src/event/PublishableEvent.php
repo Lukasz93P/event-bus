@@ -7,6 +7,7 @@ namespace Lukasz93P\EventBus\event;
 
 use Assert\Assertion;
 use Assert\AssertionFailedException;
+use Carbon\Carbon;
 use InvalidArgumentException;
 use Lukasz93P\tasksQueue\PublishableAsynchronousTask;
 use JMS\Serializer\Annotation as Serializer;
@@ -31,12 +32,20 @@ abstract class PublishableEvent extends Event implements PublishableAsynchronous
      */
     private $classIdentificationKey;
 
+    /**
+     * @var string
+     * @Serializer\SerializedName("occurredAt")
+     * @Serializer\Type("string")
+     */
+    private $occurredAt;
+
     protected function __construct(EventId $id, string $aggregateId, string $routingKey, string $exchange, string $classIdentificationKey)
     {
         parent::__construct($id, $aggregateId);
         $this->setRoutingKey($routingKey)
             ->setExchange($exchange)
             ->setClassIdentificationKey($classIdentificationKey);
+        $this->occurredAt = Carbon::now()->format('Y-m-d H:i:s');
     }
 
     private function setRoutingKey(string $routingKey): self
@@ -44,7 +53,7 @@ abstract class PublishableEvent extends Event implements PublishableAsynchronous
         try {
             Assertion::notBlank($routingKey);
         } catch (AssertionFailedException $exception) {
-            throw new InvalidArgumentException();
+            throw new InvalidArgumentException($exception->getMessage());
         }
         $this->routingKey = $routingKey;
 
@@ -56,7 +65,7 @@ abstract class PublishableEvent extends Event implements PublishableAsynchronous
         try {
             Assertion::notBlank($exchange);
         } catch (AssertionFailedException $exception) {
-            throw new InvalidArgumentException();
+            throw new InvalidArgumentException($exception->getMessage());
         }
         $this->exchange = $exchange;
 
@@ -68,7 +77,7 @@ abstract class PublishableEvent extends Event implements PublishableAsynchronous
         try {
             Assertion::notBlank($classIdentificationKey);
         } catch (AssertionFailedException $exception) {
-            throw new InvalidArgumentException();
+            throw new InvalidArgumentException($exception->getMessage());
         }
         $this->classIdentificationKey = $classIdentificationKey;
 
