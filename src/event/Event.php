@@ -11,7 +11,7 @@ use Carbon\Carbon;
 use InvalidArgumentException;
 use JMS\Serializer\Annotation as Serializer;
 
-abstract class Event
+class Event implements ProcessableEvent
 {
     /**
      * @var string
@@ -46,24 +46,24 @@ abstract class Event
         try {
             Assertion::notBlank($aggregateId);
         } catch (AssertionFailedException $exception) {
-            throw new InvalidArgumentException();
+            throw new InvalidArgumentException($exception->getMessage());
         }
         $this->aggregateId = $aggregateId;
 
         return $this;
     }
 
-    protected function getId(): string
+    public function id(): string
     {
         return $this->id;
     }
 
-    protected function getAggregateId(): string
+    public function aggregateId(): string
     {
         return $this->aggregateId;
     }
 
-    protected function getOccurredAt(): string
+    public function occurredAt(): string
     {
         return $this->occurredAt;
     }
