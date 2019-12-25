@@ -11,7 +11,7 @@ use Carbon\Carbon;
 use InvalidArgumentException;
 use JMS\Serializer\Annotation as Serializer;
 
-class Event implements ProcessableEvent
+abstract class Event implements ProcessableEvent
 {
     /**
      * @var string
