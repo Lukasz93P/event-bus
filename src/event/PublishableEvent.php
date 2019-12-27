@@ -15,13 +15,15 @@ abstract class PublishableEvent extends Event implements PublishableAsynchronous
 {
     /**
      * @var string
-     * @Serializer\Exclude()
+     * @Serializer\SerializedName("routingKey")
+     * @Serializer\Type("string")
      */
     private $routingKey;
 
     /**
      * @var string
-     * @Serializer\Exclude()
+     * @Serializer\SerializedName("exchange")
+     * @Serializer\Type("string")
      */
     private $exchange;
 
